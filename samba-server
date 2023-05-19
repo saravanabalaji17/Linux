@@ -1,0 +1,71 @@
+SAMBA uses ports 137,138. 139 and 445
+
+
+Install samba and necessary packages
+====================================
+#dnf install samba samba-common samba-client
+
+
+create share directory
+=========================
+# mkdir /samba-share
+
+#chmod 777 /samba-share
+
+
+Configuring  Samba
+=======================
+
+# cp /etc/samba/smb.conf /etc/samba/smb.conf.bkp
+
+# vim /etc/samba/smb.conf
+[samba-share]
+        comment = This is for samba share
+        path = /samba-share
+        valid users = user1
+        browseable = Yes
+        read only = No
+        writable = yes
+        guest ok = No
+
+
+====================================
+[Anonymous_share]
+        comment = publicshare
+        path = /public_share
+        browsable = yes
+        writable = yes
+        guest ok = yes
+
+[samba_share]
+        comment = samba share
+        path = /samba_share
+        browsable = yes
+        writable = yes
+        guest ok = no
+
+
+[secure_share]
+        comment = samba share
+        path = /secure
+        browsable = yes
+        writable = yes
+        guest ok = no
+        valid users = secureuser
+
+
+check syntex of configuration file
+=====================================
+#testparm
+
+
+Start and enable Samba services
+=================================
+#systemctl start smb nmb
+#systemctl enable smb nmb
+
+
+ Accessing Samba share from windows machine
+=================================================
+win+r
+\\IP-address-of-samba-server
