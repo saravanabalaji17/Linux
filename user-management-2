@@ -19,12 +19,13 @@ balaji:x:1001:1001::/home/balaji:/bin/bash
 
 
 
--l 
--u
--g 
--c
--d 
--s
+-l - loginname
+-u - uid
+-g - gid
+-c - user comment
+-d - home directory
+-s - shell
+
 
 usermod 
 
