@@ -40,7 +40,7 @@ OUTPUT
 USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
 
 # ps ­eo user,cpu,cmd ­­­­> option ­e is used for editing and option ­o is used to user define.
-
+#  ps eo uid,user,pid,ppid,stat,cpu,cmd
 
 
 
@@ -52,6 +52,9 @@ bg
 
 jobs
 
+
+
+#ps 
 -a -> Shows information about all users.
 -x -> Shows information about processes without terminals.
 -e -> Displays extended information.
@@ -330,6 +333,8 @@ Check CPU core
 ================
 #nproc
 #cat /proc/cpuinfo
+#lscpu
+#top
 
 
 
