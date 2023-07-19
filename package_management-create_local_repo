@@ -4,6 +4,7 @@ Stop and disable firewalld
 ================================
 #systemctl stop firewalld.service
 #systemctl disable firewalld.service
+#systemctl status firewalld.service
 
 Disable SELINUX
 =================
