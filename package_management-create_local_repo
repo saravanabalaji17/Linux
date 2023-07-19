@@ -1,5 +1,22 @@
-#Configure Local yum repository
 
+
+Stop and disable firewalld
+================================
+#systemctl stop firewalld.service
+#systemctl disable firewalld.service
+
+Disable SELINUX
+=================
+#vi /etc/sysconfig/selinux
+SELINUX=disabled
+#setenforce 0
+
+
+
+
+
+#Configure Local yum repository
+==========================================
 
 
 1. Attach the ISO image to your system
