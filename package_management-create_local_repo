@@ -21,7 +21,7 @@ SELINUX=disabled
 
 1. Attach the ISO image to your system
 
-select VM --> settings --> CD/DVD(IDE)--> Use ISO image file-->browse --> seletc ISO
+select VM --> settings --> CD/DVD(IDE)--> Use ISO image file--> Browse --> seletc ISO
 
 2. confirm that the ISO is in the system
 #ls -ld /dev/sr0
