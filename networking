@@ -28,7 +28,9 @@ selete VM ---> settings ---> Add Network adapter
 
 # nmcli connection status
 
+# nmcli con add type ethernet con-name ens160 ifname ens160 ipv4.addresses 192.168.159.51/24 ipv4.gateway 192.168.0.1 autoconnect yes ipv4.method manual
 # nmcli con add type ethernet con-name ens160 ifname ens160 ip4 192.168.159.51/24 gw4 192.168.0.1 autoconnect yes ipv4.method manual
+
 
 
 command to check gateway
@@ -47,3 +49,5 @@ connection modify
 # nmcli con mod ens160 ipv4.dns 8.8.8.8
 # nmcli con mod ens160 ipv4.method manual
 # nmcli con mod ens160 connection.autoconnect yes
+
+#nmcli con modify ens160 ipv4.addresses 192.168.2.100/24 ipv4.gateway 192.168.2.1 ipv4.method manual connection.autoconnect yes
