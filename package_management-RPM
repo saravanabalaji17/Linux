@@ -147,3 +147,53 @@ rpm -qdf /usr/bin/vmstat
 
 
 
+
+
+
+Attach ISO disk to VM
+========================
+
+
+select VM => settings => CD/DVD => select use ISO image => select CentOS iso 
+
+
+[root@vm-3 Packages]# ls -l /dev/sr0
+brw-rw---- 1 root cdrom 11, 0 Oct 25 18:04 /dev/sr0
+[root@vm-3 Packages]# ls -l /dev/cdrom
+lrwxrwxrwx 1 root root 3 Oct 25 18:04 /dev/cdrom -> sr0
+[root@vm-3 Packages]# mkdir /iso
+
+[root@vm-3 Packages]# mount /dev/sr0 /iso
+
+
+[root@vm-3 Packages]# df -h
+Filesystem           Size  Used Avail Use% Mounted on
+devtmpfs             4.0M     0  4.0M   0% /dev
+tmpfs                874M     0  874M   0% /dev/shm
+tmpfs                350M  5.2M  345M   2% /run
+/dev/mapper/cs-root   17G  2.1G   15G  12% /
+/dev/sda1            960M  229M  732M  24% /boot
+tmpfs                175M     0  175M   0% /run/user/0
+/dev/sr0             9.1G  9.1G     0 100% /iso            <<<<<<<<<
+[root@vm-3 Packages]#
+
+[root@vm-3 Packages]# cd /iso/
+[root@vm-3 iso]# ls
+AppStream  BaseOS  EFI  EULA  extra_files.json  images  isolinux  LICENSE  media.repo
+[root@vm-3 iso]# ls -l
+total 30
+dr-xr-xr-x 1 root root  2048 Jul  4 09:57 AppStream
+dr-xr-xr-x 1 root root  2048 Jul  4 09:57 BaseOS
+dr-xr-xr-x 1 root root  2048 Jul  4 09:45 EFI
+-r--r--r-- 1 root root   299 Jul  4 09:57 EULA
+-r--r--r-- 1 root root   745 Jul  4 09:57 extra_files.json
+dr-xr-xr-x 1 root root  2048 Jul  4 09:45 images
+dr-xr-xr-x 1 root root  2048 Jul  4 09:45 isolinux
+-r--r--r-- 1 root root 18092 Jul  4 09:57 LICENSE
+-r--r--r-- 1 root root    88 Jul  4 09:57 media.repo
+[root@vm-3 iso]#
+
+
+
+
+
