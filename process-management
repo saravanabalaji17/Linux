@@ -267,9 +267,10 @@ To schedule priorities.
 2) For new process
 ­­­­­­­­­­­­­­­­­­­­
 
-#nice ­n nicevalue command
+# nice ­n nicevalue command
 
-#nice ­n ­7 cat
+# nice ­-n ­7 cat
+# nice -n -20 seq 100000000000000000000 > /dev/null
 
 
 
