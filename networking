@@ -38,7 +38,10 @@ command to check gateway
 # netstat -rn
 # route -n
 
-
+To check ethernet card status
+==============================
+#ethtool ens160
+#ethtool ens192
 
 255.255.255.0
 connection modify
