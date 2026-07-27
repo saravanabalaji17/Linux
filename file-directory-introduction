@@ -1,4 +1,59 @@
 
+
+Basic-commands:
+
+man command
+Command --help
+hostname
+uptime
+history
+date 
+cal
+free
+top
+yum
+rpm
+locate
+cat /etc/redhat-release
+cat /etc/os-release
+cat /etc/system-release
+mkdir
+touch
+cat
+cd 
+ls
+
+uname
+ifconfig
+df –h
+du –sch
+more 
+less
+head 
+tail
+tree
+cp
+mv
+clear
+echo
+useradd
+userdel
+fdisk
+passwd
+user
+id
+group
+whoami
+who am i
+w
+ps –ef
+lsblk
+blkid
+grep
+command;command; 
+
+
+
 Command to create directory
 ============================
 
