@@ -71,6 +71,7 @@ Create Multiple Directories
 Create Parent Directories
 ------------------------------
 #mkdir -p /opt/sport/test/dir1
+#mkdir -p Company/{HR,IT,Finance}
 
 
 
