@@ -1,0 +1,545 @@
+# Linux File Permission Lab – Understanding Directory and File Permissions
+
+## Lab Objective
+
+Students will learn how **Read (r)**, **Write (w)**, and **Execute (x)** permissions affect access to **directories** and **files** by validating each permission individually.
+
+---
+
+# Lab 1: Create a Student User
+
+Login as root.
+
+```bash
+sudo -i
+```
+
+Create a user.
+
+```bash
+useradd student1
+passwd student1
+```
+
+Verify.
+
+```bash
+id student1
+```
+
+---
+
+# Lab 2: Create a Secure Directory
+
+Create the directory.
+
+```bash
+mkdir /secure
+```
+
+Set only owner permissions.
+
+```bash
+chmod 700 /secure
+```
+
+Verify.
+
+```bash
+ls -ld /secure
+```
+
+Expected Output
+
+```text
+drwx------  root root  /secure
+```
+
+---
+
+# Lab 3: Verify Student Access (No Permissions)
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Try listing the directory.
+
+```bash
+ls /secure
+```
+
+Expected
+
+```text
+ls: cannot open directory '/secure': Permission denied
+```
+
+Try entering the directory.
+
+```bash
+cd /secure
+```
+
+Expected
+
+```text
+-bash: cd: /secure: Permission denied
+```
+
+---
+
+# Lab 4: Give Others Read Permission Only
+
+Login as root.
+
+```bash
+exit
+chmod o+r /secure
+```
+
+Verify.
+
+```bash
+ls -ld /secure
+```
+
+Expected
+
+```text
+drwx----r--
+```
+
+---
+
+## Validate Read Permission
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Attempt to list the directory.
+
+```bash
+ls /secure
+```
+
+Expected
+
+```text
+ls: cannot access '/secure': Permission denied
+```
+
+### Explanation
+
+> Read permission alone is **not enough** for a directory.
+> A user also needs **Execute (x)** permission to access or list its contents.
+
+Try entering the directory.
+
+```bash
+cd /secure
+```
+
+Expected
+
+```text
+Permission denied
+```
+
+---
+
+# Lab 5: Add Write Permission (rw-)
+
+Login as root.
+
+```bash
+exit
+chmod o+rw /secure
+```
+
+Verify.
+
+```bash
+ls -ld /secure
+```
+
+Expected
+
+```text
+drwx----rw-
+```
+
+---
+
+## Validate Write Permission
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Try creating a file.
+
+```bash
+touch /secure/test.txt
+```
+
+Expected
+
+```text
+touch: cannot touch '/secure/test.txt': Permission denied
+```
+
+### Explanation
+
+Write permission alone cannot create files because **Execute (x)** is still missing.
+
+---
+
+# Lab 6: Add Execute Permission (rwx)
+
+Login as root.
+
+```bash
+exit
+chmod o+rwx /secure
+```
+
+Verify.
+
+```bash
+ls -ld /secure
+```
+
+Expected
+
+```text
+drwx---rwx
+```
+
+---
+
+## Validate Execute Permission
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Enter the directory.
+
+```bash
+cd /secure
+```
+
+Verify.
+
+```bash
+pwd
+```
+
+Expected
+
+```text
+/secure
+```
+
+Create a file.
+
+```bash
+touch test.txt
+```
+
+Verify.
+
+```bash
+ls
+```
+
+Expected
+
+```text
+test.txt
+```
+
+Remove it.
+
+```bash
+rm test.txt
+```
+
+---
+
+# Lab 7: Create a Confidential File
+
+Login as root.
+
+```bash
+exit
+```
+
+Create the file.
+
+```bash
+touch /secure/confidential
+```
+
+Edit the file.
+
+```bash
+vi /secure/confidential
+```
+
+Press
+
+```text
+i
+```
+
+Type
+
+```text
+Linux Administration
+Confidential Information
+Do Not Share
+```
+
+Save.
+
+```text
+Esc
+:wq
+```
+
+Set permission.
+
+```bash
+chmod 600 /secure/confidential
+```
+
+Verify.
+
+```bash
+ls -l /secure/confidential
+```
+
+Expected
+
+```text
+-rw-------
+```
+
+---
+
+# Lab 8: Validate File Read Permission
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Read the file.
+
+```bash
+cat /secure/confidential
+```
+
+Expected
+
+```text
+cat: /secure/confidential: Permission denied
+```
+
+---
+
+## Add Read Permission
+
+Login as root.
+
+```bash
+exit
+chmod o+r /secure/confidential
+```
+
+Verify.
+
+```bash
+ls -l /secure/confidential
+```
+
+Expected
+
+```text
+-rw----r--
+```
+
+Login as student.
+
+```bash
+su - student1
+```
+
+Read again.
+
+```bash
+cat /secure/confidential
+```
+
+Expected
+
+```text
+Linux Administration
+Confidential Information
+Do Not Share
+```
+
+---
+
+# Lab 9: Validate File Write Permission
+
+Append text.
+
+```bash
+echo "Student Entry" >> /secure/confidential
+```
+
+Expected
+
+```text
+Permission denied
+```
+
+---
+
+## Add Write Permission
+
+Login as root.
+
+```bash
+exit
+chmod o+w /secure/confidential
+```
+
+Verify.
+
+```bash
+ls -l /secure/confidential
+```
+
+Expected
+
+```text
+-rw----rw-
+```
+
+Login as student.
+
+Append data.
+
+```bash
+echo "Student Entry" >> /secure/confidential
+```
+
+Verify.
+
+```bash
+cat /secure/confidential
+```
+
+Expected
+
+```text
+Linux Administration
+Confidential Information
+Do Not Share
+Student Entry
+```
+
+---
+
+# Lab 10: Validate Execute Permission
+
+Attempt to execute the file.
+
+```bash
+./secure/confidential
+```
+
+or
+
+```bash
+/secure/confidential
+```
+
+Expected
+
+```text
+Permission denied
+```
+
+---
+
+## Add Execute Permission
+
+Login as root.
+
+```bash
+exit
+chmod o+x /secure/confidential
+```
+
+Verify.
+
+```bash
+ls -l /secure/confidential
+```
+
+Expected
+
+```text
+-rw----rwx
+```
+
+Login as student.
+
+Run the file.
+
+```bash
+/secure/confidential
+```
+
+Expected
+
+```text
+bash: /secure/confidential: Permission denied
+```
+
+or
+
+```text
+command not found
+```
+
+### Explanation
+
+Even though execute permission is set, the file contains **plain text**, not executable code. Execute permission only works for executable binaries or scripts with a valid interpreter (for example, a shell script starting with `#!/bin/bash`).
+
+---
+
+# Learning Outcomes
+
+| Permission | Directory Behaviour                                           | File Behaviour                                      |
+| ---------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| **r**      | View directory entries (requires `x` to actually access them) | Read file contents                                  |
+| **w**      | Create, delete, or rename files (requires `x`)                | Modify file contents                                |
+| **x**      | Enter (`cd`) and access the directory                         | Execute the file if it is a valid executable/script |
+
+This lab demonstrates why **directory permissions and file permissions behave differently**, which is one of the most important concepts in Linux administration.
