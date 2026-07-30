@@ -122,6 +122,10 @@ To see the information of users
 #id -un username
 #id -gn username
 
+check the password status
+=============================
+#passwd -S <username>
+
 To set user's password
 ======================
 #passwd username
