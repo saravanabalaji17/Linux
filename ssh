@@ -124,9 +124,17 @@ Configure password-less SSH session (Key based authendication)
 1) Generate public-private key pair
 
 # ssh-keygen
+# ssh-keygen -t rsa -b 4096 -f ~/.ssh/myserver_rsa
+# ssh-keygen -t ed25519 -f ~/.ssh/server1_key
 
 id_rsa
 id_rsa.pub
+
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/my_key
+             │      │           │
+             │      │           └── filename
+             │      └────────────── key size
+             └───────────────────── key type
 
 2)  Add public key to ~/.ssh/authorized_keys file on remote host
 
@@ -178,3 +186,109 @@ id_rsa.pub
 
 
 authorized_keys
+
+
+Important SSH Client Configuration
+~/.ssh/config
+
+Common directives:
+
+Directive	   Purpose
+Host	        Alias used with ssh
+HostName	    Actual server hostname/IP
+User	        Remote username
+Port	        SSH port
+IdentityFile	Private key to use
+
+Host webserver
+    HostName 192.168.1.100
+    User student
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+
+
+# vi ~/.ssh/config
+
+
+Host servera
+    HostName servera.example.com
+    User usera
+    IdentityFile ~/.ssh/id_rsa_servera
+
+Host serverb
+    HostName serverb.example.com
+    User userb
+    IdentityFile ~/.ssh/id_rsa_serverb
+
+
+Now you can simply type:
+# ssh servera
+
+instead of:
+# ssh -i ~/.ssh/id_rsa_servera usera@servera.example.com
+
+And:
+# ssh serverb
+
+instead of:
+# ssh -i ~/.ssh/id_rsa_serverb userb@serverb.example.com
+
+
+
+Direct Key vs ssh-agent
+=============================
+Without agent
+#ssh -i .ssh/key-with-pass user@remotehost
+
+SSH directly uses that private key.
+
+With agent
+#eval $(ssh-agent)
+#ssh-add .ssh/key-with-pass
+
+#ssh-add -l
+#ssh user@remotehost
+
+The agent provides the key when SSH needs it.
+
+Remember
+ssh-keygen
+     │
+     ▼
+Creates keys
+
+ssh-add
+     │
+     ▼
+Loads private key into ssh-agent
+
+ssh
+     │
+     ▼
+Uses key for authentication
+
+
+
+| Command                   | Purpose                                         |
+| ------------------------- | ----------------------------------------------- |
+| `ssh user@host`           | Connect to remote host                          |
+| `ssh host`                | Connect using client configuration/default user |
+| `ssh user@host hostname`  | Run remote command                              |
+| `ssh-keygen`              | Generate SSH key pair                           |
+| `ssh-keygen -lf file.pub` | Display key fingerprint                         |
+| `ssh-keygen -R host`      | Remove host from `known_hosts`                  |
+| `ssh-copy-id user@host`   | Copy public key to server                       |
+| `ssh-add key`             | Add private key to ssh-agent                    |
+| `ssh-add -l`              | List keys in agent                              |
+| `ssh -i key user@host`    | Use a specific private key                      |
+| `ssh -v user@host`        | Verbose troubleshooting                         |
+| `cat ~/.ssh/known_hosts`  | View user's known hosts                         |
+| `cat ~/.ssh/config`       | View SSH client configuration                   |
+| `sshd -t`                 | Validate SSH server configuration               |
+| `systemctl reload sshd`   | Reload SSH server configuration                 |
+| `systemctl status sshd`   | Check SSH server status                         |
+
+
+
+
+
