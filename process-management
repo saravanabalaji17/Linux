@@ -172,6 +172,8 @@ su -  mahesh
 #ps -f 1
 #ps -f 26500
 
+#ps -p 1 -o comm=
+
 #pidof bash
 
 
