@@ -284,7 +284,39 @@ who am i
 w
 
 
+# cat names
+balaji
+saravanabalaji
+varun
+dheepu
+faiz
+FaIZ
+BALAji
+varuN
+VARUN
+DHeePU
+DHEEPU
+BALAJI:
 
+#cat names|wc
+#cat names|wc -l
+#cat names|wc -c
+#cat names|wc -w
+#cat names|wc -m
+
+# cat names |grep -iE 'balaji|dheepu|faiz'
+#cat names |grep -w balaji
+#grep -Ri balaji *
+#cat names |grep -C1 varun
+#cat names |grep -A1 varun
+#cat names |grep -B2 varun
+#cat names |grep -v varun
+#cat names |grep -iv varun
+
+
+#echo 'hello team,how are you -------------- ' >> d-1
+# seq 1 100 > numbers
+#fallocate -l 2G data
 
 
 
