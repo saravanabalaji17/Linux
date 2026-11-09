@@ -42,7 +42,17 @@ To remove all ACL
 
 
 
+To set default ACL on a file for a specific group
+=============================
 
+#setfacl -d -m u:user:7 file/directory 
+#setfacl -d -m g:user:7 file/directory 
+
+
+To remove default ACL 
+=============================
+
+#setfacl -k file/directory 
 
 
 
