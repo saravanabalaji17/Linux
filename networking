@@ -28,7 +28,8 @@ selete VM ---> settings ---> Add Network adapter
 
 # nmcli connection status
 
-# nmcli con add type ethernet con-name ens160 ifname ens160 ipv4.addresses 192.168.159.51/24 ipv4.gateway 192.168.0.1 autoconnect yes ipv4.method manual
+
+# nmcli con add type ethernet con-name ens160 ifname ens160 ipv4.addresses 192.168.159.51/24 ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8 autoconnect yes ipv4.method manual
 # nmcli con add type ethernet con-name ens160 ifname ens160 ip4 192.168.159.51/24 gw4 192.168.0.1 autoconnect yes ipv4.method manual
 
 
@@ -59,13 +60,81 @@ connection modify
 # nmcli con mod ens160 ipv4.method manual
 # nmcli con mod ens160 connection.autoconnect yes
 
-#nmcli con modify ens160 ipv4.addresses 192.168.2.100/24 ipv4.gateway 192.168.2.1 ipv4.method manual connection.autoconnect yes
+#nmcli con modify ens160 ipv4.addresses 192.168.2.100/24 ipv4.gateway 192.168.2.1 ipv4.dns 8.8.8.8 ipv4.method manual connection.autoconnect yes
 
 
 Restart the connection (if required)
 =========================================
 
 # nmcli connection show
+# nmcli connection show --active
 
 # nmcli connection down "ens192"
 # nmcli connection up "ens192"
+
+remove connection 
+==================
+# nmcli connection delete ens160
+# nmcli connection delete a164c54e-faec-4362-a918-9a562b8c75e4
+
+
+# cat /etc/NetworkManager/system-connections/ens160.nmconnection
+[connection]
+id=ens160
+uuid=94124387-23d5-3f94-9fe3-595fbf67722c
+type=ethernet
+autoconnect-priority=-999
+interface-name=ens160
+timestamp=1788763217
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=eui64
+method=auto
+
+[proxy]
+
+# nmcli con add type ethernet con-name ens160 ifname ens160 ipv4.addresses 192.168.159.51/24 ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8 autoconnect yes ipv4.method manual
+
+
+# cat /etc/NetworkManager/system-connections/ens160.nmconnection
+[connection]
+id=ens160
+uuid=d07fb23a-5d39-4d20-8500-bc872cb350e2
+type=ethernet
+interface-name=ens160
+timestamp=1794330385
+
+[ethernet]
+
+[ipv4]
+address1=192.168.44.140/24
+dns=8.8.8.8;
+gateway=192.168.44.2
+method=manual
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+
+Remove DNS entries
+=======================
+# nmcli connection show ens160| grep -i dns^C
+# nmcli connection modify ens160 ipv4.dns ""
+
+nmcli connection reload
+nmcli connection up ens192
+
+
+nmcli device show ens192 | grep IP4.DNS
+cat /etc/resolv.conf
+
+
+
