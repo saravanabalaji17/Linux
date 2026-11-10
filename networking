@@ -47,6 +47,7 @@ To check ethernet card status
 connection modify
 ====================
 
+# nmcli connection modify "Wired connection 1" connection.id "ens192"
 # nmcli con modify ens160 ipv4.addresses 192.168.2.100/24
 # nmcli con mod ens160 ipv4.gateway 192.168.2.1
 # nmcli con mod ens160 ipv4.dns 8.8.8.8
@@ -54,3 +55,12 @@ connection modify
 # nmcli con mod ens160 connection.autoconnect yes
 
 #nmcli con modify ens160 ipv4.addresses 192.168.2.100/24 ipv4.gateway 192.168.2.1 ipv4.method manual connection.autoconnect yes
+
+
+Restart the connection (if required)
+=========================================
+
+# nmcli connection show
+
+# nmcli connection down "ens192"
+# nmcli connection up "ens192"
