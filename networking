@@ -44,10 +44,15 @@ To check ethernet card status
 #ethtool ens192
 
 255.255.255.0
+
+Rename a connection
+======================
+# nmcli connection modify "<old-name>" connection.id "<new-name>"
+# nmcli connection modify "Wired connection 1" connection.id "ens192"
+
 connection modify
 ====================
 
-# nmcli connection modify "Wired connection 1" connection.id "ens192"
 # nmcli con modify ens160 ipv4.addresses 192.168.2.100/24
 # nmcli con mod ens160 ipv4.gateway 192.168.2.1
 # nmcli con mod ens160 ipv4.dns 8.8.8.8
